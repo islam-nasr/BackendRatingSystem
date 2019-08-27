@@ -57,5 +57,5 @@ sequelize
   .catch(error =>
     console.log("Could not sync models with database 🤦 .", error)
   );
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5002;
 app.listen(port, () => console.log(`Server up and running on ${port} 👍 .`));
