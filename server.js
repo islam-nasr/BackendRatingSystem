@@ -57,7 +57,7 @@ app.use('/api/v1/objects', objects)
 app.use('/api/v1/ranks', ranks)
 app.use('/api/v1/ratings', ratings)
 app.use('/api/v1/scales', scales)
-app.use('/', explore)
+app.use('/api/v1/explore', explore)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
