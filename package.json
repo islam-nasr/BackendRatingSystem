@@ -1,0 +1,52 @@
+{
+  "name": "lirten",
+  "version": "1.0.0",
+  "description": "This package.json holds the dependencies of all the backend services of lirtenhub",
+  "main": "server.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
+  },
+  "dependencies": {
+    "aws-sdk": "^2.302.0",
+    "axios": "^0.18.0",
+    "bcrypt": "^3.0.6",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "elasticsearch": "^16.3.0",
+    "express": "^4.16.4",
+    "express-form-data": "^2.0.8",
+    "fuse.js": "^3.4.5",
+    "joi": "^14.3.1",
+    "jsonfile": "^5.0.0",
+    "jsonwebtoken": "^8.5.0",
+    "jwt-decode": "^2.2.0",
+    "moment": "^2.24.0",
+    "node-cron": "^2.0.3",
+    "nodemailer": "^6.3.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "pg": "^7.11.0",
+    "pg-hstore": "^2.3.3",
+    "prettier": "^1.18.2",
+    "s3": "^4.4.0",
+    "sequelize": "^5.10.1",
+    "store": "^2.0.12",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "nodemon": "^1.19.1"
+  },
+  "author": "Islam Nasr",
+  "license": "ISC"
+}
