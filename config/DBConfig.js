@@ -1,12 +1,13 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize')
+const keys = require('./keys')
 
-//local connection
-const sequelize = new Sequelize('RatingSystem', 'postgres', '1234', {
-    host: 'localhost',
-    dialect: 'postgres'
-  })
+// Connecting to local postgres
+// const sequelize = new Sequelize('DMS', 'postgres', '123456789', {
+//   host: 'localhost',
+//   dialect: 'postgres'
+// })
 
-//cloud db
-// const cloudDatabase = require('./keys').postgresURI
-// const sequelize = new Sequelize(cloudDatabase)
-module.exports = sequelize;
+// Connecting to remote postgres
+const sequelize = new Sequelize(keys.postgresURI)
+
+module.exports = sequelize
