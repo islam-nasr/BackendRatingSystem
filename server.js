@@ -1,6 +1,7 @@
 // import libraries
 const express = require('express')
 const cors = require('cors')
+const all_routes = require('express-list-endpoints')
 // passport middleware
 // import middleware
 const loggerMiddleware = require('./api/middleware/logger')
@@ -15,8 +16,7 @@ const objects = require('./api/routes/object.router')
 const ranks = require('./api/routes/rank.router')
 const ratings = require('./api/routes/rating.router')
 const scales = require('./api/routes/scale.router')
-const serviceList = require('./api/routes/serviceList.router')
-const all_routes = require('express-list-endpoints')
+// const serviceList = require('./api/routes/serviceList.router')
 
 // init middleware
 app.use(express.json())
@@ -57,7 +57,7 @@ app.use('/api/v1/objects', objects)
 app.use('/api/v1/ranks', ranks)
 app.use('/api/v1/ratings', ratings)
 app.use('/api/v1/scales', scales)
-app.use('/api/v1/explore', explore)
+app.use('/', explore)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'))
