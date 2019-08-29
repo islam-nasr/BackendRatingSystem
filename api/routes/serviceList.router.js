@@ -1,11 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const serviceListController = require("../controllers/serviceList.controller");
+const serviceListController = require('../controllers/serviceList.controller')
 
-const {
-    viewList
-} = serviceListController
-router.post("/explore", viewList)
+const { viewList } = serviceListController
+router.post('/explore', viewList)
 
-module.exports = router;
+module.exports = router

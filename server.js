@@ -1,36 +1,54 @@
 // import libraries
-const express = require("express");
-const cors = require("cors");
+const express = require('express')
+const cors = require('cors')
+const all_routes = require('express-list-endpoints')
 // passport middleware
 // import middleware
-const loggerMiddleware = require("./api/middleware/logger");
+const loggerMiddleware = require('./api/middleware/logger')
 // import db configuration
-const sequelize = require("./config/DBConfig");
+const sequelize = require('./config/DBConfig')
 // create the app
-const app = express();
+const app = express()
 // import route handlers
-const equations = require("./api/routes/equation.router");
-const instances = require("./api/routes/instance.router");
-const objects = require("./api/routes/object.router");
-const ranks = require("./api/routes/rank.router");
-const ratings = require("./api/routes/rating.router");
-const scales = require("./api/routes/scale.router");
-const serviceList = require("./api/routes/serviceList.router");
+const equations = require('./api/routes/equation.router')
+const instances = require('./api/routes/instance.router')
+const objects = require('./api/routes/object.router')
+const ranks = require('./api/routes/rank.router')
+const ratings = require('./api/routes/rating.router')
+const scales = require('./api/routes/scale.router')
+// const serviceList = require('./api/routes/serviceList.router')
 
 // init middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
-app.use(loggerMiddleware);
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cors())
+app.use(loggerMiddleware)
 // test postgres connection
 sequelize
   .authenticate()
   .then(() => {
-    console.log("Connected to postgres 💪 .");
+    console.log('Connected to postgres 💪 .')
   })
   .catch(err => {
-    console.error("Unable to connect to postgres 😳 .", err);
-  });
+    console.error('Unable to connect to postgres 😳 .', err)
+  })
+
+const explore = (req, res) => {
+  const routes = all_routes(app)
+  const result = {
+    ServiceList: []
+  }
+  for (route of routes) {
+    const name = route.path.split('/')[4]
+    result.ServiceList.push({
+      Service: {
+        name: name,
+        fullUrl: `http://localhost:5002/${route.path}`
+      }
+    })
+  }
+  return res.json(result)
+}
 // Direct to Route Handlers
 // routes
 //app.use("/api/v1/RatingSystem/equations", equations);
@@ -39,23 +57,23 @@ app.use("/api/v1/RatingSystem/objects", objects);
 app.use("/api/v1/RatingSystem/ranks", ranks);
 app.use("/api/v1/RatingSystem/ratings", ratings);
 app.use("/api/v1/RatingSystem/scales", scales);
-app.use("/", serviceList);
+app.use('/explore', explore)
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+  })
 }
-const eraseDatabaseOnSync = false;
+const eraseDatabaseOnSync = false
 sequelize
   .sync({ force: eraseDatabaseOnSync })
-  .then(() => console.log("Synced models with database 💃 ."))
+  .then(() => console.log('Synced models with database 💃 .'))
   .then(() => {
     // walletPopulate()
   })
   .catch(error =>
-    console.log("Could not sync models with database 🤦 .", error)
-  );
-const port = process.env.PORT || 5002;
-app.listen(port, () => console.log(`Server up and running on ${port} 👍 .`));
+    console.log('Could not sync models with database 🤦 .', error)
+  )
+const port = process.env.PORT || 5002
+app.listen(port, () => console.log(`Server up and running on ${port} 👍 .`))

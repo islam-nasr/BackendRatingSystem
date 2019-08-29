@@ -1,5 +1,5 @@
-const{ ServiceList}=require( "../helpers/serviceList");
+const { ServiceList } = require('../helpers/serviceList')
 
-exports.viewList = async (req,res) =>{
-    res.send({"ServiceList": ServiceList})
+exports.viewList = async (req, res) => {
+  res.json({ ServiceList: ServiceList })
 }
