@@ -5,15 +5,15 @@ const router = express.Router();
 // note that all imports happen at the beggining of the file
 const objectController = require("../controllers/object.controller");
 const {
-    viewAll,
-    create,
+    viewAllObjects,
+    CreateObject,
     //deleteObject,
     //update,
     view
 } = objectController
-router.post("/create", create)
+router.post("/CreateObject", CreateObject)
 //router.post("/delete", deleteObject)
-router.post("/viewAll", viewAll)
+router.post("/viewAllObjects", viewAllObjects)
 //router.post("/update", update)
 router.post("/view", view)
 

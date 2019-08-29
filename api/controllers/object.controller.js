@@ -9,7 +9,7 @@ unknown,
 attributeNameMissing
 } = require("../constants/statusCodes");
 
-exports.viewAll = async (req, res) => {
+exports.ObjectInstanceListInquiry = async (req, res) => {
   const obj = await Object.findAll();
   return res.send(obj);
 };
@@ -23,7 +23,7 @@ exports.view = async (req, res) => {
   if (obj) return res.send(obj);
   else return res.send({ StatusCode: objectNotFound });
 };
-exports.create = async (req, res) => {
+exports.CreateObject = async (req, res) => {
   try {
     if(req.body.Object.name=="")
     return res.send({StatusCode:1010})

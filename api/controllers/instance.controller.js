@@ -11,7 +11,7 @@ const {
   unknown
   } = require("../constants/statusCodes");
 
-exports.viewAll = async (req, res) => {
+exports.ObjectInstanceListInquiry = async (req, res) => {
   try {
     const obj = await Object.findByPk(req.body.Object.id)
     if (!obj)
@@ -24,7 +24,7 @@ exports.viewAll = async (req, res) => {
     return res.status.send(errorCreator(unkown, "Something went wrong"));
   }
 }
-exports.create = async (req, res) => {
+exports.CreateObjectInstance = async (req, res) => {
   const isValid = validator.createValidation(req.body);
   if (!isValid) {
     return res
@@ -68,7 +68,7 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.view = async (req, res) => {
+exports.ObjectInstanceDetailsInquiry = async (req, res) => {
   const inst = await Instance.findByPk(req.body.Instance.id);
   const i = { StatusCode: success, Instance: inst }
   if (inst) return res.send(i);
@@ -102,7 +102,7 @@ exports.deleteInstance = async (req, res) => {
   }
 };
 */
-exports.viewRatingList = async (req, res) => {
+exports.InstanceUserRatingListInquiry = async (req, res) => {
   try {
     const inst = await Instance.findByPk(req.body.Instance.id);
     if (!inst) return res.send({ StatusCode: attributesMissing });

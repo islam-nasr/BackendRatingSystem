@@ -5,8 +5,8 @@ const router = express.Router();
 // note that all imports happen at the beggining of the file
 const ratingController = require("../controllers/rating.controller");
 const {
-    create
+    RateInstance
 } = ratingController;
-router.post("/create", create);
+router.post("/RateInstance", RateInstance);
 
 module.exports = router;

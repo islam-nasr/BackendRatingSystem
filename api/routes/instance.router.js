@@ -5,18 +5,18 @@ const router = express.Router();
 // note that all imports happen at the beggining of the file
 const instanceController = require("../controllers/instance.controller");
 const {
-    view,
-    create,
+    ObjectInstanceDetailsInquiry,
+    CreateObjectInstance,
     //deleteInstance,
     //update,
-    viewAll,
-    viewRatingList
+    ObjectInstanceListInquiry,
+    InstanceUserRatingListInquiry
 } = instanceController;
-router.post("/create", create);
+router.post("/CreateObjectInstance", CreateObjectInstance);
 //router.post("/delete", deleteInstance);
-router.post("/view", view);
+router.post("/ObjectInstanceDetailsInquiry", ObjectInstanceDetailsInquiry);
 //router.post("/update", update);
-router.post("/viewAll", viewAll);
-router.post("/viewRatingList", viewRatingList);
+router.post("/ObjectInstanceListInquiry", ObjectInstanceListInquiry);
+router.post("/InstanceUserRatingListInquiry", InstanceUserRatingListInquiry);
 
 module.exports = router;

@@ -10,7 +10,7 @@ const {
   unknown,
   attributeNameMissing
 } = require("../constants/statusCodes");
-exports.create = async (req, res) => {
+exports.RateInstance = async (req, res) => {
   try {
     const obj = await Object.findByPk(req.body.Rating.Object.id);
     if (!obj) {

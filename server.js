@@ -33,12 +33,12 @@ sequelize
   });
 // Direct to Route Handlers
 // routes
-//app.use("/api/v1/equations", equations);
-app.use("/api/v1/instances", instances);
-app.use("/api/v1/objects", objects);
-app.use("/api/v1/ranks", ranks);
-app.use("/api/v1/ratings", ratings);
-app.use("/api/v1/scales", scales);
+//app.use("/api/v1/RatingSystem/equations", equations);
+app.use("/api/v1/RatingSystem/instances", instances);
+app.use("/api/v1/RatingSystem/objects", objects);
+app.use("/api/v1/RatingSystem/ranks", ranks);
+app.use("/api/v1/RatingSystem/ratings", ratings);
+app.use("/api/v1/RatingSystem/scales", scales);
 app.use("/", serviceList);
 
 if (process.env.NODE_ENV === "production") {
