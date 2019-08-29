@@ -1,1 +1,1 @@
-const Equation = require("../../models/equation.model");
+const Equation = require('../../models/equation.model')

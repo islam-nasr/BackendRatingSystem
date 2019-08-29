@@ -1,1 +1,1 @@
-const Rank = require("../../models/rank.model");
+const Rank = require('../../models/rank.model')

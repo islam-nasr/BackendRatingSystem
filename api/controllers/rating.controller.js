@@ -1,6 +1,6 @@
-const Rating = require("../../models/rating.model");
-const Object = require("../../models/object.model");
-const Instance = require("../../models/instance.model");
+const Rating = require('../../models/rating.model')
+const Object = require('../../models/object.model')
+const Instance = require('../../models/instance.model')
 const {
   success,
   objectNotFound,
@@ -9,57 +9,57 @@ const {
   attributesMissing,
   unknown,
   attributeNameMissing
-} = require("../constants/statusCodes");
+} = require('../constants/statusCodes')
 exports.RateInstance = async (req, res) => {
   try {
-    const obj = await Object.findByPk(req.body.Rating.Object.id);
+    const obj = await Object.findByPk(req.body.Rating.Object.id)
     if (!obj) {
       return res.send({
         StatusCode: objectNotFound
-      });
+      })
     }
-    const inst = await Instance.findByPk(req.body.Rating.Instance.id);
+    const inst = await Instance.findByPk(req.body.Rating.Instance.id)
     if (!inst) {
       return res.send({
         StatusCode: instanceNotFound
-      });
+      })
     }
-    const attrib = req.body.Rating.AttributeRatings;
-    const instanceAttribute = inst.AttributeListOverAllRating;
-    const objectAttribute = obj.AttributeList;
+    const attrib = req.body.Rating.AttributeRatings
+    const instanceAttribute = inst.AttributeListOverAllRating
+    const objectAttribute = obj.AttributeList
     /*if (inst.ObjectId != obj.id) {
       return res.send({
         StatusCode: 1012
       });
     }*/
     for (let i = 0; i < attrib.length; i++) {
-      let attribName = attrib[i].name;
+      let attribName = attrib[i].name
       for (let j = i + 1; j < attrib.length; j++) {
-        let attribName2 = attrib[j].name;
+        let attribName2 = attrib[j].name
         if (attribName == attribName2) {
           return res.send({
             StatusCode: attributesMissing
-          });
+          })
         }
       }
     }
-    let flag = true;
+    let flag = true
     attrib.map(item => {
-      if (item.name == null || item.name == "")
-        return res.send({ StatusCode: attributeNameMissing });
-      if (item.rate == null) return res.send({ StatusCode: attributeRatingMissing });
+      if (item.name == null || item.name == '')
+        return res.send({ StatusCode: attributeNameMissing })
+      if (item.rate == null)
+        return res.send({ StatusCode: attributeRatingMissing })
       objectAttribute.map(item2 => {
         if (item.name == item2.name) {
-          flag = false;
+          flag = false
         }
-      }
-      )
+      })
       if (flag == true) {
         return res.send({
           StatusCode: attributesMissing
-        });
+        })
       } else {
-        flag = true;
+        flag = true
       }
     })
 
@@ -83,20 +83,19 @@ exports.RateInstance = async (req, res) => {
     //     flag = true;
     //   }
     // }
-    let flag2 = true;
+    let flag2 = true
     objectAttribute.map(item => {
       attrib.map(item2 => {
         if (item.name == item2.name) {
-          flag2 = false;
+          flag2 = false
         }
-      }
-      )
+      })
       if (flag2 == true) {
         return res.send({
           StatusCode: attributesMissing
-        });
+        })
       } else {
-        flag2 = true;
+        flag2 = true
       }
     })
     // for (let i = 0; i < objectAttribute.length; i++) {
@@ -115,8 +114,8 @@ exports.RateInstance = async (req, res) => {
     //     flag2 = true;
     //   }
     // }
-    let attributes = [];
-    let averageRating = 0;
+    let attributes = []
+    let averageRating = 0
     // for (let i = 0; i < objectAttribute.length; i++) {
     //   for (let j = 0; j < attrib.length; j++) {
     //     if (attrib[j].name == objectAttribute[i].name) {
@@ -137,9 +136,8 @@ exports.RateInstance = async (req, res) => {
             name: item.name,
             weight: item.weight,
             rate: item2.rate
-          });
-          averageRating =
-            averageRating + item2.rate * item.weight;
+          })
+          averageRating = averageRating + item2.rate * item.weight
         }
       })
     })
@@ -149,22 +147,21 @@ exports.RateInstance = async (req, res) => {
       UserId: req.body.Rating.UserId,
       AttributeRatings: attributes,
       overAllRating: averageRating
-    });
+    })
 
     const allInstanceRatings = await Rating.findAll({
       where: {
         InstanceId: ratng.InstanceId
       }
-    });
-    let instanceAverageRating = 0;
-    const attributesx = [];
+    })
+    let instanceAverageRating = 0
+    const attributesx = []
     objectAttribute.map(item => {
       attributesx.push({
         name: item.name,
         rate: 0
-      });
-    }
-    )
+      })
+    })
     // for (let i = 0; i < objectAttribute.length; i++) {
     //   attributesx.push({
     //     name: objectAttribute[i].name,
@@ -173,38 +170,37 @@ exports.RateInstance = async (req, res) => {
     // }
     for (let i = 0; i < allInstanceRatings.length; i++) {
       instanceAverageRating =
-        instanceAverageRating + allInstanceRatings[i].overAllRating;
+        instanceAverageRating + allInstanceRatings[i].overAllRating
       for (let j = 0; j < allInstanceRatings[i].AttributeRatings.length; j++) {
         attributesx[j].rate =
-          allInstanceRatings[i].AttributeRatings[j].rate + attributesx[j].rate;
+          allInstanceRatings[i].AttributeRatings[j].rate + attributesx[j].rate
       }
     }
     attributesx.map(attribute => {
-      attribute.rate=attribute.rate/allInstanceRatings.length;
-    }
-    )
+      attribute.rate = attribute.rate / allInstanceRatings.length
+    })
     // for (let i = 0; i < attributesx.length; i++) {
     //   attributesx[i].rate = attributesx[i].rate / allInstanceRatings.length;
     // }
-    instanceAverageRating = instanceAverageRating / allInstanceRatings.length;
+    instanceAverageRating = instanceAverageRating / allInstanceRatings.length
     Instance.update(
       {
         AttributeListOverAllRating: attributesx,
         OverAllRating: instanceAverageRating
       },
       { where: { id: req.body.Rating.Instance.id } }
-    );
+    )
     res.send({
       StatusCode: success,
       Rating: {
         id: ratng.id,
         OverAllRating: ratng.overAllRating
       }
-    });
+    })
   } catch (exception) {
     console.log(exception)
     return res.send({
       StatusCode: unknown
-    });
+    })
   }
-};
+}

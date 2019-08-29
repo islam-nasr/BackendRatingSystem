@@ -1,8 +1,8 @@
-const express = require("express");
+const express = require('express')
 //const logger = require('../middleware/logger').logger;
 
 // note that all imports happen at the beggining of the file
-const equationController = require("../controllers/equation.controller");
+const equationController = require('../controllers/equation.controller')
 
 // exports.view = async (req, res) => {
 //     const eq = await Equation.findByPk(req.body.id);
@@ -19,7 +19,7 @@ const equationController = require("../controllers/equation.controller");
 //   };
 //   exports.update = async (req, res) => {
 //     try {
-  
+
 //       const eq = await Equation.findByPk(req.body.id);
 //       if (!eq) return res.send("Equation not found");
 //       await Equation.update({name:req.body.name,attributes:req.body.attributes }, { where: { id: req.body.id } });

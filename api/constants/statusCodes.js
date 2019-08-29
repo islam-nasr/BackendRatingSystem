@@ -1,4 +1,4 @@
-const success = 0
+const success = 0000
 
 const objectNameExist = 1001
 
