@@ -9,7 +9,7 @@ unknown,
 attributeNameMissing
 } = require("../constants/statusCodes");
 
-exports.ObjectInstanceListInquiry = async (req, res) => {
+exports.viewAllObjects = async (req, res) => {
   const obj = await Object.findAll();
   return res.send(obj);
 };
